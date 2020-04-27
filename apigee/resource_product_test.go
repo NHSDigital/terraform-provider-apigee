@@ -89,6 +89,8 @@ func testAccCheckProductExists(n string, name string) resource.TestCheckFunc {
 	}
 }
 
+// TODO -- add a test that checks that read products with the same name won't be overwritten
+
 const testAccCheckProductConfigRequired = `
 resource "apigee_api_proxy" "tf_helloworld" {
    name  		= "tf_helloworld"

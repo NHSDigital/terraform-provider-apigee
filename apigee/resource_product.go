@@ -5,7 +5,6 @@ import (
 	"log"
 	"strings"
 
-	"github.com/gofrs/uuid"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/zambien/go-apigee-edge"
 )
@@ -89,9 +88,6 @@ func resourceProductCreate(d *schema.ResourceData, meta interface{}) error {
 
 	client := meta.(*apigee.EdgeClient)
 
-	u1, _ := uuid.NewV4()
-	d.SetId(u1.String())
-
 	ProductData, err := setProductData(d)
 	if err != nil {
 		log.Printf("[ERROR] resourceProductCreate error in setProductData: %s", err.Error())
@@ -158,6 +154,7 @@ func resourceProductRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
+	d.SetId(ProductData.Name)
 	d.Set("name", ProductData.Name)
 
 	if ProductData.DisplayName == "" {
@@ -220,6 +217,9 @@ func resourceProductDelete(d *schema.ResourceData, meta interface{}) error {
 func setProductData(d *schema.ResourceData) (apigee.Product, error) {
 
 	log.Print("[DEBUG] setProductData START")
+
+	// CHANGED IT HERE
+	d.Set("Id", d.Get("name"))
 
 	if d.Get("display_name") == "" {
 		d.Set("display_name", d.Get("name"))
