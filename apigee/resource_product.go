@@ -96,7 +96,9 @@ func resourceProductCreate(d *schema.ResourceData, meta interface{}) error {
 
 	_, _, e := client.Products.Create(ProductData)
 	if e != nil {
+		// Check if this is a 409 (Resource already exists)
 		log.Printf("[ERROR] resourceProductCreate error in product creation: %s", e.Error())
+
 		return fmt.Errorf("[ERROR] resourceProductCreate error in product creation: %s", e.Error())
 	}
 
@@ -121,6 +123,7 @@ func resourceProductImport(d *schema.ResourceData, meta interface{}) ([]*schema.
 	} else {
 		d.Set("display_name", productData.DisplayName)
 	}
+	d.Set("Id", productData.Name)
 	d.Set("display_name", productData.DisplayName)
 	d.Set("description", productData.Description)
 	d.Set("approval_type", productData.ApprovalType)
@@ -154,7 +157,8 @@ func resourceProductRead(d *schema.ResourceData, meta interface{}) error {
 		}
 	}
 
-	d.SetId(ProductData.Name)
+	d.SetId(ProductData.Name) // TODO figure out which of these is correct
+	d.Set("Id", ProductData.Name)
 	d.Set("name", ProductData.Name)
 
 	if ProductData.DisplayName == "" {
