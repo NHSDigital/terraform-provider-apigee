@@ -82,7 +82,6 @@ func resourceApiProxyDeploymentImport(d *schema.ResourceData, meta interface{}) 
 func resourceApiProxyDeploymentRead(d *schema.ResourceData, meta interface{}) (e error) {
 	log.Print("[DEBUG] resourceApiProxyDeploymentRead START")
 	log.Printf("[DEBUG] resourceApiProxyDeploymentRead proxy_name: %#v", d.Get("proxy_name").(string))
-	log.Printf("[DEBUG] resourceApiProxyDeploymentRead proxy_id: %#v", d.GetId())
 
 	client := meta.(*apigee.EdgeClient)
 
@@ -130,8 +129,6 @@ func resourceApiProxyDeploymentRead(d *schema.ResourceData, meta interface{}) (e
 		d.SetId("")
 	}
 
-	log.Printf("[DEBUG] resourceApiProxyDeploymentRead value is {delay: %s, env: %s, id: %s, override: %s, proxy_name: %s, revision: %s}", d.Get("delay"), d.Get("env"), d.GetId(), d.Get("override"), d.Get("proxy_name"), d.Get("revision"))
-
 	return nil
 }
 
@@ -176,8 +173,7 @@ func resourceApiProxyDeploymentCreate(d *schema.ResourceData, meta interface{}) 
 		}
 	}
 
-	id, _ := uuid.NewV4()
-	d.SetId(id.String())
+	d.SetId(proxyDep.Revision.String())
 	d.Set("revision", proxyDep.Revision.String())
 
 	log.Printf("[DEBUG] resourceApiProxyDeploymentCreate Deployed revision %d of %s", rev, proxy_name)
