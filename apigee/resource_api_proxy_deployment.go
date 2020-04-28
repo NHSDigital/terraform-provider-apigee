@@ -128,6 +128,9 @@ func resourceApiProxyDeploymentRead(d *schema.ResourceData, meta interface{}) (e
 		log.Print("[DEBUG] resourceApiProxyDeploymentRead no deployment found")
 		d.SetId("")
 	}
+
+	log.Printf("[DEBUG] resourceApiProxyDeploymentRead value is %#v", d)
+
 	return nil
 }
 
