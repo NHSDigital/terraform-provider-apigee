@@ -100,7 +100,8 @@ func resourceProductCreate(d *schema.ResourceData, meta interface{}) error {
 		log.Printf("[ERROR] resourceProductCreate error in product creation: %s", e.Error())
 
 		if resp.StatusCode == 409 {
-			// If there is a conflict, update it instead
+			log.Printf("[DEBUG] resourceProductCreate failed due to conflict, updating instead")
+			// If there is a conflicting name, update it instead
 			return resourceProductUpdate(d, meta)
 		}
 
