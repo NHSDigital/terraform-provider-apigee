@@ -129,7 +129,7 @@ func resourceApiProxyDeploymentRead(d *schema.ResourceData, meta interface{}) (e
 		d.SetId("")
 	}
 
-	log.Printf("[DEBUG] resourceApiProxyDeploymentRead value is {delay: %s, env: %s, org: %s, override: %s, proxy_name: %s, revision: %s}", d.Get("delay", d.Get("env"), d.Get("org"), d.Get("override"), d.Get("proxy_name"), d.Get("revision")))
+	log.Printf("[DEBUG] resourceApiProxyDeploymentRead value is {delay: %s, env: %s, org: %s, override: %s, proxy_name: %s, revision: %s}", d.Get("delay"), d.Get("env"), d.Get("org"), d.Get("override"), d.Get("proxy_name"), d.Get("revision"))
 
 	return nil
 }
