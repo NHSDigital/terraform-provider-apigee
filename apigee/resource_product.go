@@ -94,10 +94,15 @@ func resourceProductCreate(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("[ERROR] resourceProductCreate error in setProductData: %s", err.Error())
 	}
 
-	_, _, e := client.Products.Create(ProductData)
+	_, resp, e := client.Products.Create(ProductData)
 	if e != nil {
 		// Check if this is a 409 (Resource already exists)
 		log.Printf("[ERROR] resourceProductCreate error in product creation: %s", e.Error())
+
+		if resp.StatusCode == 409 {
+			// If there is a conflict, update it instead
+			return resourceProductUpdate(d, meta)
+		}
 
 		return fmt.Errorf("[ERROR] resourceProductCreate error in product creation: %s", e.Error())
 	}
