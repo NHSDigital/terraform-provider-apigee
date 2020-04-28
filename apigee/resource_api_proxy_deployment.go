@@ -158,7 +158,7 @@ func resourceApiProxyDeploymentCreate(d *schema.ResourceData, meta interface{}) 
 	if err != nil {
 		if strings.Contains(err.Error(), "is already deployed") {
 			log.Printf("[DEBUG] resourceApiProxyDeploymentCreate revision %d of %s is already deployed", rev, proxy_name)
-			return resourceApiProxyDeploymentRead(d, meta)
+			return nil
 		}
 
 		if strings.Contains(err.Error(), "conflicts with existing deployment path") {
