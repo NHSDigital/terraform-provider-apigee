@@ -123,9 +123,9 @@ func resourceApiProxyDeploymentRead(d *schema.ResourceData, meta interface{}) (e
 		} else {
 			d.Set("revision", matchedRevision)
 		}
-		log.Printf("[DEBUG] resourceApiProxyDeploymentRead - deployment found. Revision is: %#v", d.Get("revision").(string))
+		log.Printf("[DEBUG] resourceApiProxyDeploymentRead deployment found. Revision is: %#v", d.Get("revision").(string))
 	} else {
-		log.Print("[DEBUG] resourceApiProxyDeploymentRead - no deployment found")
+		log.Print("[DEBUG] resourceApiProxyDeploymentRead no deployment found")
 		d.SetId("")
 	}
 	return nil
