@@ -2,9 +2,9 @@
 package apigee
 
 import (
+	"github.com/NHSDigital/go-apigee-edge"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/zambien/go-apigee-edge"
 )
 
 func Provider() terraform.ResourceProvider {
