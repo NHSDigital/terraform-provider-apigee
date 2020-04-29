@@ -2,7 +2,7 @@ package apigee
 
 import (
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/zambien/go-apigee-edge"
+	"github.com/NHSDigital/go-apigee-edge"
 	"reflect"
 	"sort"
 )

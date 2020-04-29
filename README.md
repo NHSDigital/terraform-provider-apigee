@@ -6,7 +6,7 @@ Allows Terraform deployments and management of Apigee API proxies, deployments, 
 
 ## Installation
 
-Download the appropriate release for your system: https://github.com/zambien/terraform-provider-apigee/releases
+Download the appropriate release for your system: https://github.com/NHSDigital/terraform-provider-apigee/releases
 
 See here for info on how to install the plugin:
 
@@ -18,7 +18,7 @@ An example of how to do this would be:
 `mkdir -p ~/terraform-providers`
 
 2. Download plugin for linux into your home directory
-`curl -L https://github.com/zambien/terraform-provider-apigee/releases/download/v0.0.7/terraform-provider-apigee-v0.0.7-linux64 -o ~/terraform-providers/terraform-provider-apigee-v0.0.7-linux64`
+`curl -L https://github.com/NHSDigital/terraform-provider-apigee/releases/download/v0.0.7/terraform-provider-apigee-v0.0.7-linux64 -o ~/terraform-providers/terraform-provider-apigee-v0.0.7-linux64`
 
 3. Add the providers clause if you don't already have one.  Warning, this command will overwrite your .terraformrc!
 ```
@@ -209,7 +209,7 @@ resource "apigee_shared_flow_deployment" "helloworld_shared_flow_deployment" {
 ```
 
 ## Contributions
-Please read [our contribution guidelines.](https://github.com/zambien/terraform-provider-apigee/blob/master/.github/CONTRIBUTING.md)
+Please read [our contribution guidelines.](https://github.com/NHSDigital/terraform-provider-apigee/blob/master/.github/CONTRIBUTING.md)
 
 ## Building
 Should be buildable on any terraform version at or higher than 0.9.3.  To build you would use the standard go build command.  For example for MacOS:
