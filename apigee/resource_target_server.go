@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/NHSDigital/go-apigee-edge"
 	"github.com/gofrs/uuid"
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/NHSDigital/go-apigee-edge"
 )
 
 func resourceTargetServer() *schema.Resource {
@@ -109,8 +109,13 @@ func resourceTargetServerCreate(d *schema.ResourceData, meta interface{}) error 
 
 	_, _, e := client.TargetServers.Create(targetServerData, d.Get("env").(string))
 	if e != nil {
-		log.Printf("[ERROR] resourceTargetServerCreate error in create: %s", e.Error())
-		return fmt.Errorf("[ERROR] resourceTargetServerCreate error in create: %s", e.Error())
+		if strings.Contains(e.Error(), "already exists") {
+			log.Printf("[DEBUG] resourceApiTargetServerCreate target server %s already exists", d.Get("name").(string))
+			return resourceTargetServerRead(d, meta)
+		} else {
+			log.Printf("[ERROR] resourceTargetServerCreate error in create: %s", e.Error())
+			return fmt.Errorf("[ERROR] resourceTargetServerCreate error in create: %s", e.Error())
+		}
 	}
 
 	return resourceTargetServerRead(d, meta)
