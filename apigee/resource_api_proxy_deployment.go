@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/NHSDigital/go-apigee-edge"
+	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceApiProxyDeployment() *schema.Resource {
@@ -214,11 +214,16 @@ func resourceApiProxyDeploymentUpdate(d *schema.ResourceData, meta interface{}) 
 	_, _, err := client.Proxies.ReDeploy(proxy_name, env, rev, delay, override)
 
 	if err != nil {
-		log.Printf("[ERROR] resourceApiProxyDeploymentUpdate error redeploying: %s", err.Error())
-		if strings.Contains(err.Error(), " is already deployed into environment ") {
+		if strings.Contains(err.Error(), "is already deployed") {
+			log.Printf("[DEBUG] resourceApiProxyDeploymentCreate revision %d of %s is already deployed", rev, proxy_name)
 			return resourceApiProxyDeploymentRead(d, meta)
+		} else {
+			log.Printf("[ERROR] resourceApiProxyDeploymentUpdate error redeploying: %s", err.Error())
+			if strings.Contains(err.Error(), " is already deployed into environment ") {
+				return resourceApiProxyDeploymentRead(d, meta)
+			}
+			return fmt.Errorf("[ERROR] resourceApiProxyDeploymentUpdate error redeploying: %s", err.Error())
 		}
-		return fmt.Errorf("[ERROR] resourceApiProxyDeploymentUpdate error redeploying: %s", err.Error())
 	}
 
 	log.Printf("[DEBUG] resourceApiProxyDeploymentUpdate Deployed revision %d of %s", rev, proxy_name)
